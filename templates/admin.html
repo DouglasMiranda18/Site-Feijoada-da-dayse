@@ -83,18 +83,34 @@
   <!-- Página Admin -->
   <div class="container my-5">
     <h2>Adicionar Novo Produto</h2>
-    <form method="POST" action="/admin">
+    <form method="POST" action="/admin" enctype="multipart/form-data">
       <div class="mb-3">
         <label for="nome" class="form-label">Nome do Produto</label>
         <input type="text" class="form-control" id="nome" name="nome" required>
       </div>
       <div class="mb-3">
-        <label for="ingredientes" class="form-label">Ingredientes</label>
-        <textarea class="form-control" id="ingredientes" name="ingredientes" rows="3" required></textarea>
+        <label for="acompanhamentos" class="form-label">Acompanhamentos</label>
+        <textarea class="form-control" id="acompanhamentos" name="acompanhamentos" rows="3" required></textarea>
       </div>
       <div class="mb-3">
         <label for="valor" class="form-label">Valor (R$)</label>
         <input type="number" class="form-control" id="valor" name="valor" step="0.01" required>
+      </div>
+      <div class="mb-3">
+        <label for="foto" class="form-label">Foto</label>
+        <input type="file" class="form-control" id="foto" name="foto" accept="image/*" required>
+      </div>
+      <div class="mb-3">
+        <label for="tamanho" class="form-label">Tamanho</label>
+        <select class="form-select" id="tamanho" name="tamanho" required>
+          <option value="P">P - 200ml</option>
+          <option value="M">M - 500ml</option>
+          <option value="G">G - 800ml</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="estoque" class="form-label">Estoque</label>
+        <input type="number" class="form-control" id="estoque" name="estoque" required>
       </div>
       <button type="submit" class="btn btn-success">Salvar Produto</button>
     </form>
@@ -114,16 +130,17 @@
       {% for produto in produtos %}
       <div class="col-md-6 mb-4">
         <div class="card product-card">
-          <img src="https://images.unsplash.com/photo-1604908177522-42967b6e5a99" class="card-img-top" alt="{{ produto[1] }}">
+          <img src="{{ produto.foto_url }}" class="card-img-top" alt="{{ produto.nome }}">
           <div class="card-body">
-            <h5 class="card-title">{{ produto[1] }}</h5>
-            <p class="card-text">{{ produto[2] }}</p>
+            <h5 class="card-title">{{ produto.nome }}</h5>
+            <p class="card-text">{{ produto.acompanhamentos }}</p>
+            <p><strong>Estoque:</strong> {{ produto.estoque }} unidades disponíveis</p>
             <select class="form-select mb-2">
-              <option value="{{ produto[3] }}">Individual - R${{ produto[3]|round(2) }}</option>
-              <option value="{{ produto[3] * 1.8|round(2) }}">Dupla - R${{ produto[3] * 1.8|round(2) }}</option>
-              <option value="{{ produto[3] * 2.8|round(2) }}">Família - R${{ produto[3] * 2.8|round(2) }}</option>
+              <option value="{{ produto.valor }}">P - R${{ produto.valor|round(2) }}</option>
+              <option value="{{ produto.valor * 1.8|round(2) }}">M - R${{ produto.valor * 1.8|round(2) }}</option>
+              <option value="{{ produto.valor * 2.8|round(2) }}">G - R${{ produto.valor * 2.8|round(2) }}</option>
             </select>
-            <a href="https://wa.me/5511999999999?text=Olá! Gostaria de fazer um pedido de {{ produto[1] }}" class="btn btn-success w-100">Pedir via WhatsApp</a>
+            <a href="https://wa.me/5511999999999?text=Olá! Gostaria de fazer um pedido de {{ produto.nome }}" class="btn btn-success w-100">Pedir via WhatsApp</a>
           </div>
         </div>
       </div>
