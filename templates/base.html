@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Feijoada Shop{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static\styles.css">
+</head>
+<style>
+    .card.product-card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .card-img {
+        width: 100%;
+        height: 200px;
+        /* você pode ajustar essa altura */
+        object-fit: cover;
+        /* faz o recorte elegante da imagem */
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+    }
+
+    .card-grid {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-columns: repeat(3, 1fr);
+        /* padrão: 3 por linha */
+    }
+
+    .card-img-top {
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover .card-img-top {
+        transform: scale(1.05);
+    }
+
+    .btn-primary {
+        background-color: #ff4d6d;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #e63956;
+    }
+
+    .custom-select {
+        border-radius: 50px;
+        padding: 0.5rem 1rem;
+        border: 2px solid #ddd;
+        background-color: #f8f9fa;
+        font-weight: 500;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .custom-select:focus {
+        border-color: #ff4d6d;
+        box-shadow: 0 0 0 0.25rem rgba(255, 77, 109, 0.25);
+        outline: none;
+    }
+
+    .navbar {
+        position: relative;
+        z-index: 10;
+    }
+
+
+    @media (max-width: 768px) {
+        .card-grid {
+            grid-template-columns: repeat(2, 1fr);
+            /* no celular: 2 por linha */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .card-grid {
+            grid-template-columns: 1fr;
+            /* opcional: 1 por linha em telas muito pequenas */
+        }
+    }
+</style>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a href="#" class="navbar-brand">Feijoada da Dayse</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="menu-toggle">
+                </div>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cardapio">Cardápio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">Sobre Nós</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contato</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Promoções -->
+    <section class="promotions">
+        <div class="container">
+            <div class="promotion-banner">
+                <h2>🔥 PROMOÇÃO ESPECIAL 🔥</h2>
+                <p>Desconto de 10% em pedidos acima de R$100</p>
+                <p>Use o código: FEIJOADA10</p>
+            </div>
+        </div>
+    </section>
+    <!-- Sobre Nós -->
+    <section id="about" class="section about">
+        <div class="container">
+            <h2 class="section-title">Sobre Nós</h2>
+            <div class="about-content">
+                <div class="about-icon">
+                    🍲
+                </div>
+                <div class="about-text">
+                    <h3>Nossa História</h3>
+                    <p>Fundada em 2018, a Feijoada da Dayse nasceu da paixão pela culinária brasileira e do desejo de
+                        levar um dos
+                        pratos mais tradicionais do país para a mesa dos brasileiros com praticidade e qualidade.</p>
+                    <p>Nossa feijoada é preparada com ingredientes selecionados, seguindo uma receita familiar que passa
+                        de
+                        geração em geração. Cada detalhe é cuidadosamente pensado para proporcionar uma experiência
+                        gastronômica
+                        autêntica.</p>
+                    <h3>Nossa Missão</h3>
+                    <p>Queremos preservar a tradição da feijoada brasileira, oferecendo um produto de qualidade que
+                        possa ser
+                        apreciado no conforto do lar. Acreditamos que a boa comida une pessoas e cria momentos
+                        especiais.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container mt-4" id="cardapio">
+        {% block content %}{% endblock %}
+    </div>
+    <!-- Avaliações -->
+    <section class="section testimonials">
+        <div class="container">
+            <h2 class="section-title">O que dizem nossos clientes</h2>
+            <div class="testimonial-container">
+                <div class="testimonial card">
+                    <p class="testimonial-text">"A melhor feijoada da cidade! Entrega rápida e tudo muito bem embalado.
+                        Os
+                        complementos são tão bons quanto o prato principal."</p>
+                    <p class="testimonial-author">— João Silva, São Paulo</p>
+                </div>
+                <div class="testimonial card">
+                    <p class="testimonial-text">"Deliciosa e muito bem temperada, vale cada centavo. Já pedi várias
+                        vezes e nunca
+                        me decepcionei. A farofa da casa é sensacional!"</p>
+                    <p class="testimonial-author">— Ana Oliveira, Rio de Janeiro</p>
+                </div>
+                <div class="testimonial card">
+                    <p class="testimonial-text">"Experimentei a versão vegana e fiquei impressionado! Sabor incrível e
+                        porção
+                        generosa. Recomendo para todos, mesmo quem não é vegano."</p>
+                    <p class="testimonial-author">— Carlos Mendes, Belo Horizonte</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <h2 class="section-title">Contato</h2>
+            <div class="row">
+                <!-- Informações -->
+                <div class="col-md-6 mb-4">
+                    <h3>Informações</h3>
+                    <p><strong>Horário de funcionamento:</strong><br>Terça a Domingo, das 11h às 15h</p>
+                    <p><strong>Telefone:</strong><br>(11) 99999-9999</p>
+                    <p><strong>Email:</strong><br>contato@feijoadaemcasa.com.br</p>
+                    <p><strong>Endereço:</strong><br>Rua das Delicias, 123 - São Paulo, SP</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-column">
+                <h3>Feijoada da Dayse</h3>
+                <p>Entregamos a melhor feijoada da cidade diretamente na sua casa.</p>
+                <p>&copy; 2023 Feijoada da Dayse. Todos os direitos reservados.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Formas de Pagamento</h3>
+                <div class="payment-methods">
+                    <div class="payment-icon">PIX</div>
+                    <div class="payment-icon">CARD</div>
+                    <div class="payment-icon">CASH</div>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Siga-nos</h3>
+                <p>Acompanhe nossas redes sociais para novidades, promoções e dicas.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navegação Mobile
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Fechar menu ao clicar em um link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Animações de scroll
+        function checkScroll() {
+            const elements = document.querySelectorAll('.about-text, .menu-item, .testimonial');
+            const windowHeight = window.innerHeight;
+
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                if (elementPosition < windowHeight - 100) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Verificar posição inicial
+        window.addEventListener('load', checkScroll);
+        window.addEventListener('scroll', checkScroll);
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'939364d1519be12a',t:'MTc0NjE0NTY1Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

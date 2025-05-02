@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Feijoada Shop{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static\styles.css">
+</head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a href="#" class="navbar-brand">Feijoada da Dayse</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="menu-toggle">
+                </div>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cardapio">Cardápio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">Sobre Nós</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contato</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section class="promotions">
+        <div class="container">
+            <div class="promotion-banner">
+                <h2>🔥 PROMOÇÃO ESPECIAL 🔥</h2>
+                <p>Desconto de 10% em pedidos acima de R$100</p>
+                <p>Use o código: FEIJOADA10</p>
+            </div>
+        </div>
+    </section>
+    <!-- Sobre Nós -->
+    <section id="about" class="section about">
+        <div class="container">
+            <h2 class="section-title">Sobre Nós</h2>
+            <div class="about-content">
+                <div class="about-icon">
+                    🍲
+                </div>
+                <div class="about-text">
+                    <h3>Nossa História</h3>
+                    <p>Fundada em 2018, a Feijoada da Dayse nasceu da paixão pela culinária brasileira e do desejo de
+                        levar um dos
+                        pratos mais tradicionais do país para a mesa dos brasileiros com praticidade e qualidade.</p>
+                    <p>Nossa feijoada é preparada com ingredientes selecionados, seguindo uma receita familiar que passa
+                        de
+                        geração em geração. Cada detalhe é cuidadosamente pensado para proporcionar uma experiência
+                        gastronômica
+                        autêntica.</p>
+                    <h3>Nossa Missão</h3>
+                    <p>Queremos preservar a tradição da feijoada brasileira, oferecendo um produto de qualidade que
+                        possa ser
+                        apreciado no conforto do lar. Acreditamos que a boa comida une pessoas e cria momentos
+                        especiais.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Produtos -->
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Nossos Produtos</h2><button class="btn btn-light btn-sm cart-button" type="button"
+            data-bs-toggle="offcanvas" data-bs-target="#cartModal">
+            <i class="bi bi-cart3"></i> Ver Carrinho
+            <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <div class="row">
+            {% for produto in produtos %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <!-- Imagem do produto -->
+                    <img src="{{ produto[7] }}" class="card-img-top" alt="Imagem do produto">
+
+                    <div class="card-body">
+                        <!-- Título do produto -->
+                        <h5 class="card-title">{{ produto[1] }}</h5>
+
+                        <!-- Descrição do produto -->
+                        <p class="card-text">{{ produto[2] }}</p>
+
+                        <!-- Seleção de tamanho -->
+                        <p class="card-text">
+                            <strong>Tamanho:</strong>
+                            <select class="form-select" id="sizeSelect_{{ produto[0] }}"
+                                onchange="updatePrice(this, '{{ produto[0] }}', {{ produto[3] }}, {{ produto[4] }}, {{ produto[5] }})">
+                                {% if produto[3] is not none and produto[3] > 0 %}
+                                <option value="Pequeno" data-price="{{ produto[3] }}">
+                                    Pequeno: R$ {{ "%.2f"|format(produto[3]) }}
+                                </option>
+                                {% endif %}
+                                {% if produto[4] is not none and produto[4] > 0 %}
+                                <option value="Médio" data-price="{{ produto[4] }}">
+                                    Médio: R$ {{ "%.2f"|format(produto[4]) }}
+                                </option>
+                                {% endif %}
+                                {% if produto[5] is not none and produto[5] > 0 %}
+                                <option value="Grande" data-price="{{ produto[5] }}">
+                                    Grande: R$ {{ "%.2f"|format(produto[5]) }}
+                                </option>
+                                {% endif %}
+                            </select>
+                        </p>
+
+                        <!-- Preço exibido -->
+                        <p class="card-text price" id="price_{{ produto[0] }}">
+                            R$ {{ "%.2f"|format(produto[3]) }}
+                        </p>
+
+                        <!-- Categoria do produto -->
+                        <p class="card-text">
+                            <strong>Categoria:</strong> {{ produto[8] }}
+                        </p>
+
+                        <!-- Disponibilidade do produto -->
+                        <p class="card-text">
+                            {% if produto[6] == 1 %}
+                            <span class="badge bg-success">Disponível</span>
+                            {% else %}
+                            <span class="badge bg-danger">Indisponível</span>
+                            {% endif %}
+                        </p>
+
+                        <!-- Botão Adicionar ao Carrinho -->
+                        <button class="btn btn-primary"
+                            onclick="addToCart('{{ produto[1] }}', '{{ produto[0] }}', 'Pequeno', {{ produto[3] }})">
+                            Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Offcanvas Carrinho -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartModal" aria-labelledby="cartModalLabel">
+        <div class="offcanvas-header">
+            <h5 id="cartModalLabel"><i class="bi bi-cart3"></i> Meu Carrinho</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <h6>Itens no Carrinho</h6>
+            <ul class="list-group" id="cartList" style="max-height: 300px; overflow-y: auto;"></ul>
+            <hr />
+
+            <h6>Detalhes para Envio</h6>
+            <div class="mb-3">
+                <input type="text" id="customerName" class="form-control" placeholder="Seu nome" required>
+            </div>
+            <div class="mb-3">
+                <input type="text" id="customerPhone" class="form-control" placeholder="Telefone (00) 123456789"
+                    required>
+            </div>
+            <div class="mb-3">
+                <input type="text" id="customerAddress" class="form-control" placeholder="Endereço" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="paymentMethod" class="form-label">Forma de Pagamento</label>
+                <select id="paymentMethod" class="form-select" required>
+                    <option value="">Selecione uma forma de pagamento</option>
+                    <option value="Dinheiro">Dinheiro</option>
+                    <option value="Pix">Pix</option>
+                    <option value="Cartão">Cartão</option>
+                </select>
+            </div>
+
+            <div class="text-end">
+                <button onclick="sendOrder()" class="btn btn-pink w-100">Enviar Pedido</button>
+            </div>
+        </div>
+    </div>
+    <!-- Contato -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <h2 class="section-title">Contato</h2>
+            <div class="row">
+                <!-- Informações -->
+                <div class="col-md-6 mb-4">
+                    <h3>Informações</h3>
+                    <p><strong>Horário de funcionamento:</strong><br>Terça a Domingo, das 11h às 15h</p>
+                    <p><strong>Telefone:</strong><br>(11) 99999-9999</p>
+                    <p><strong>Email:</strong><br>contato@feijoadaemcasa.com.br</p>
+                    <p><strong>Endereço:</strong><br>Rua das Delicias, 123 - São Paulo, SP</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-column">
+                <h3>Feijoada da Dayse</h3>
+                <p>Entregamos a melhor feijoada da cidade diretamente na sua casa.</p>
+                <p>&copy; 2023 Feijoada da Dayse. Todos os direitos reservados.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Formas de Pagamento</h3>
+                <div class="payment-methods">
+                    <div class="payment-icon">PIX</div>
+                    <div class="payment-icon">CARD</div>
+                    <div class="payment-icon">CASH</div>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Siga-nos</h3>
+                <p>Acompanhe nossas redes sociais para novidades, promoções e dicas.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script Carrinho -->
+    <script>
+        let cartItems = [];
+
+        // Função para adicionar itens ao carrinho
+        function addToCart(productName, productId, size, price) {
+            const select = document.querySelector(`#sizeSelect_${productId}`);
+            const selectedSize = select.value;
+            const selectedPrice = parseFloat(select.options[select.selectedIndex].dataset.price);
+
+            const item = {
+                name: productName,
+                id: productId,
+                size: selectedSize,
+                price: selectedPrice
+            };
+
+            cartItems.push(item);
+            document.getElementById("cartCount").innerText = cartItems.length;
+            updateCartList();
+        }
+
+        // Função para atualizar o carrinho no modal
+        function updateCartList() {
+            const list = document.getElementById("cartList");
+            list.innerHTML = "";
+            cartItems.forEach((item, index) => {
+                const li = document.createElement("li");
+                li.className = "list-group-item d-flex justify-content-between align-items-center";
+                li.innerHTML = `${item.name} (${item.size}) - R$ ${item.price.toFixed(2).replace('.', ',')}
+                <button class="btn btn-sm btn-outline-danger" onclick="removeItem(${index})">&times;</button>`;
+                list.appendChild(li);
+            });
+        }
+
+        // Função para remover item do carrinho
+        function removeItem(index) {
+            cartItems.splice(index, 1);
+            document.getElementById("cartCount").innerText = cartItems.length;
+            updateCartList();
+        }
+
+        // Função para atualizar preço quando o tamanho for alterado
+        function updatePrice(select, productId, pequeno, medio, grande) {
+            const selectedSize = select.value;
+            let price = 0;
+
+            if (selectedSize === "Pequeno") {
+                price = pequeno;
+            } else if (selectedSize === "Médio") {
+                price = medio;
+            } else if (selectedSize === "Grande") {
+                price = grande;
+            }
+
+            // Atualiza o preço mostrado na página
+            const priceElement = document.querySelector(`#price_${productId}`);
+            priceElement.innerText = `R$ ${price.toFixed(2).replace('.', ',')}`;
+        }
+
+        // Função para enviar o pedido via WhatsApp
+        function sendOrder() {
+            const name = document.getElementById('customerName').value;
+            const phone = document.getElementById('customerPhone').value;
+            const address = document.getElementById('customerAddress').value;
+            const payment = document.getElementById('paymentMethod').value;
+
+            if (!name || !phone || !address || !payment || cartItems.length === 0) {
+                alert('Por favor, preencha todos os campos e adicione pelo menos um item ao carrinho.');
+                return;
+            }
+
+            let message = `Olá! Gostaria de fazer um pedido:\n\n`;
+            cartItems.forEach(item => {
+                message += `• ${item.name} (${item.size}) - R$ ${item.price.toFixed(2).replace('.', ',')}\n`;
+            });
+
+            const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+            message += `\nTotal: R$ ${total.toFixed(2).replace('.', ',')}`;
+            message += `\n\nNome: ${name}\nTelefone: ${phone}\nEndereço: ${address}\nPagamento: ${payment}`;
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappNumber = '558186103152'; // Substitua pelo número real com DDI
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+        }
+    </script>
+</body>
+
+</html>
