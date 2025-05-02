@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Feijoada em Casa</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --marrom-escuro: #5b1c20;
+      --laranja: #d88b3e;
+      --vermelho: #ba3b35;
+      --branco: #ffffff;
+    }
+
+    body {
+      background-color: var(--branco);
+    }
+
+    .navbar {
+      background-color: var(--marrom-escuro);
+    }
+
+    .navbar-brand,
+    .nav-link {
+      color: var(--branco) !important;
+    }
+
+    .btn-dark {
+      background-color: var(--marrom-escuro);
+    }
+
+    .btn-success {
+      background-color: var(--vermelho);
+      border-color: var(--vermelho);
+    }
+
+    .btn-success:hover {
+      background-color: #a5312d;
+      border-color: #a5312d;
+    }
+
+    footer {
+      background-color: var(--marrom-escuro);
+      color: var(--branco);
+    }
+
+    img.produto-img {
+      width: 100px;
+      height: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="/">Feijoada em Casa</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="/">Cardápio</a></li>
+          <li class="nav-item"><a class="nav-link" href="/admin">Admin</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container my-5">
+    <h2>Adicionar Novo Produto</h2>
+    <form method="POST" action="/admin" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="nome" class="form-label">Nome do Produto</label>
+        <input type="text" class="form-control" id="nome" name="nome" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="descricao" class="form-label">Descrição</label>
+        <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Tamanhos e Preços</label>
+        <div class="input-group mb-2">
+          <span class="input-group-text">P</span>
+          <input type="text" class="form-control" name="tamanho_nome[]" value="P - 200ml" readonly>
+          <span class="input-group-text">R$</span>
+          <input type="number" step="0.01" class="form-control" name="tamanho_preco[]" required>
+        </div>
+        <div class="input-group mb-2">
+          <span class="input-group-text">M</span>
+          <input type="text" class="form-control" name="tamanho_nome[]" value="M - 500ml" readonly>
+          <span class="input-group-text">R$</span>
+          <input type="number" step="0.01" class="form-control" name="tamanho_preco[]" required>
+        </div>
+        <div class="input-group">
+          <span class="input-group-text">G</span>
+          <input type="text" class="form-control" name="tamanho_nome[]" value="G - 800ml" readonly>
+          <span class="input-group-text">R$</span>
+          <input type="number" step="0.01" class="form-control" name="tamanho_preco[]" required>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Complementos (opcional)</label>
+        <div class="input-group mb-2">
+          <input type="text" class="form-control" name="complemento_nome[]" placeholder="Nome do complemento">
+          <span class="input-group-text">R$</span>
+          <input type="number" step="0.01" class="form-control" name="complemento_preco[]" placeholder="Preço">
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Personalizações</label>
+        <div class="input-group mb-2">
+          <input type="text" class="form-control" name="personalizacao_tipo[]" placeholder="Tipo (ex: tempero)">
+          <input type="text" class="form-control" name="personalizacao_opcao[]" placeholder="Opção (ex: leve)">
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="foto" class="form-label">Foto</label>
+        <input type="file" class="form-control" id="foto" name="foto" accept="image/*" required>
+      </div>
+
+      <button type="submit" class="btn btn-success">Salvar Produto</button>
+    </form>
+
+    <hr>
+
+    <h2>Produtos Cadastrados</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Imagem</th>
+          <th>Nome</th>
+          <th>Descrição</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for produto in produtos %}
+        <tr>
+          <td><img src="{{ url_for('static', filename='img/' ~ produto.imagem) }}" class="produto-img" alt=""></td>
+          <td>{{ produto.nome }}</td>
+          <td>{{ produto.descricao }}</td>
+          <td>
+            <a href="{{ url_for('editar_produto', id=produto.id) }}" class="btn btn-warning btn-sm">Editar</a>
+            <a href="{{ url_for('excluir_produto', id=produto.id) }}" class="btn btn-danger btn-sm"
+              onclick="return confirm('Tem certeza que deseja excluir este produto?');">Excluir</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <footer class="text-center py-4">
+    <p>&copy; 2025 Feijoada em Casa. Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
