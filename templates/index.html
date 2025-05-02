@@ -4,132 +4,485 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Feijoada em Casa</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    :root {
-      --marrom-escuro: #5b1c20;
-      --laranja: #d88b3e;
-      --vermelho: #ba3b35;
-      --branco: #ffffff;
-      --preto: #000000;
-    }
-
-    body {
-      background-color: var(--branco);
-      color: var(--preto);
-    }
-
-    .navbar {
-      background-color: var(--marrom-escuro);
-    }
-
-    .navbar-brand,
-    .nav-link {
-      color: var(--branco) !important;
-    }
-
-    .banner {
-      background-color: var(--laranja);
-      color: var(--preto);
-    }
-
-    .btn-dark {
-      background-color: var(--marrom-escuro);
-      border-color: var(--marrom-escuro);
-    }
-
-    .btn-success {
-      background-color: var(--vermelho);
-      border-color: var(--vermelho);
-    }
-
-    .btn-success:hover {
-      background-color: #a5312d;
-      border-color: #a5312d;
-    }
-
-    .product-card img {
-      height: 200px;
-      object-fit: cover;
-    }
-
-    .fixed-whatsapp {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 1000;
-    }
-
-    footer {
-      background-color: var(--marrom-escuro);
-      color: var(--branco);
-    }
-  </style>
+  <title>Feijoada em Dayse - Delivery de Feijoada</title>
+  <link rel="stylesheet" href="static\css\styles.css">
 </head>
+<style>
+  .card.product-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .card-img {
+    width: 100%;
+    height: 200px;
+    /* você pode ajustar essa altura */
+    object-fit: cover;
+    /* faz o recorte elegante da imagem */
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+  }
+
+  .card-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    /* padrão: 3 por linha */
+  }
+
+  .card-img-top {
+    transition: transform 0.3s ease;
+  }
+
+  .card:hover .card-img-top {
+    transform: scale(1.05);
+  }
+
+  .btn-primary {
+    background-color: #ff4d6d;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #e63956;
+  }
+
+  .custom-select {
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    border: 2px solid #ddd;
+    background-color: #f8f9fa;
+    font-weight: 500;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .custom-select:focus {
+    border-color: #ff4d6d;
+    box-shadow: 0 0 0 0.25rem rgba(255, 77, 109, 0.25);
+    outline: none;
+  }
+
+  @media (max-width: 768px) {
+    .card-grid {
+      grid-template-columns: repeat(2, 1fr);
+      /* no celular: 2 por linha */
+    }
+  }
+
+  @media (max-width: 480px) {
+    .card-grid {
+      grid-template-columns: 1fr;
+      /* opcional: 1 por linha em telas muito pequenas */
+    }
+  }
+</style>
 
 <body>
-  <!-- Cabeçalho -->
-  <nav class="navbar navbar-expand-lg">
-    <div class="container">
-      <a class="navbar-brand" href="#">Feijoada em Casa</a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="#cardapio">Cardápio</a></li>
-          <li class="nav-item"><a class="nav-link" href="#como-funciona">Como Funciona</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contato">Contato</a></li>
-        </ul>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="#" class="logo">Feijoada em Dayse</a>
+      <div class="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
+      <ul class="nav-links">
+        <li><a href="#home">Início</a></li>
+        <li><a href="#menu">Cardápio</a></li>
+        <li><a href="#about">Sobre Nós</a></li>
+        <li><a href="#contact">Contato</a></li>
+      </ul>
     </div>
   </nav>
 
-  <!-- Banner -->
-  <div class="banner text-center p-5">
-    <h1>Feijoada fresquinha na sua casa</h1>
-    <p>Escolha seu tamanho, monte seu prato e receba com rapidez!</p>
-    <a href="#cardapio" class="btn btn-dark">Ver Cardápio</a>
-  </div>
+  <!-- Carrossel -->
+  <section id="home" class="carousel">
+    <div class="carousel-item active">
+      <div class="carousel-content">
+        <h1>Feijoada quentinha entregue em casa!</h1>
+        <p>Saboreie a melhor feijoada da cidade sem sair do conforto do seu lar.</p>
+        <a href="#menu" class="btn">Ver Cardápio</a>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="carousel-content">
+        <h1>Sabor caseiro com aquele toque especial!</h1>
+        <p>Receita tradicional preparada com ingredientes selecionados.</p>
+        <a href="#menu" class="btn">Ver Cardápio</a>
+      </div>
+    </div>
+    <div class="carousel-indicators">
+      <div class="indicator active" data-index="0"></div>
+      <div class="indicator" data-index="1"></div>
+    </div>
+  </section>
 
-  <!-- Cardápio -->
-  <div class="container my-5" id="cardapio">
-    <h2 class="mb-4">Cardápio</h2>
-    <div class="row">
-      {% for produto in produtos %}
-      <div class="col-md-6 mb-4">
-        <div class="card product-card">
-          <img src="https://images.unsplash.com/photo-1604908177522-42967b6e5a99" class="card-img-top"
-            alt="{{ produto[1] }}">
-          <div class="card-body">
-            <h5 class="card-title">{{ produto[1] }}</h5>
-            <p class="card-text">{{ produto[2] }}</p>
-            <select class="form-select mb-2">
-              <option value="{{ produto[3] }}">Individual - R${{ produto[3]|float|round(2) }}</option>
-              <option value="{{ produto[3]|float * 1.8|round(2) }}">Dupla - R${{ produto[3]|float * 1.8|round(2) }}
-              </option>
-              <option value="{{ produto[3]|float * 2.8|round(2) }}">Família - R${{ produto[3]|float * 2.8|round(2) }}
-              </option>
-            </select>
-            <a href="https://wa.me/5511999999999?text=Olá! Gostaria de fazer um pedido de {{ produto[1] }}"
-              class="btn btn-success w-100">Pedir via WhatsApp</a>
-          </div>
+  <!-- Promoções -->
+  <section class="promotions">
+    <div class="container">
+      <div class="promotion-banner">
+        <h2>🔥 PROMOÇÃO ESPECIAL 🔥</h2>
+        <p>Desconto de 10% em pedidos acima de R$100</p>
+        <p>Use o código: FEIJOADA10</p>
+      </div>
+    </div>
+  </section>
+  <!-- Sobre Nós -->
+  <section id="about" class="section about">
+    <div class="container">
+      <h2 class="section-title">Sobre Nós</h2>
+      <div class="about-content">
+        <div class="about-icon">
+          🍲
+        </div>
+        <div class="about-text">
+          <h3>Nossa História</h3>
+          <p>Fundada em 2018, a Feijoada em Dayse nasceu da paixão pela culinária brasileira e do desejo de levar um dos
+            pratos mais tradicionais do país para a mesa dos brasileiros com praticidade e qualidade.</p>
+          <p>Nossa feijoada é preparada com ingredientes selecionados, seguindo uma receita familiar que passa de
+            geração em geração. Cada detalhe é cuidadosamente pensado para proporcionar uma experiência gastronômica
+            autêntica.</p>
+          <h3>Nossa Missão</h3>
+          <p>Queremos preservar a tradição da feijoada brasileira, oferecendo um produto de qualidade que possa ser
+            apreciado no conforto do lar. Acreditamos que a boa comida une pessoas e cria momentos especiais.</p>
         </div>
       </div>
-      {% endfor %}
     </div>
-  </div>
+  </section>
 
-  <!-- Rodapé -->
-  <footer class="text-center py-4">
-    <p>&copy; 2025 Feijoada em Casa. Todos os direitos reservados.</p>
-    <p>Formas de pagamento: Pix, Cartão, Dinheiro</p>
+  <section id="menu" class="section menu">
+    <div class="container">
+      <h2 class="section-title">Cardápio</h2>
+      <div class="card-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        {% for produto in produtos %}
+        <div class="col">
+          <div class="card h-100 shadow-sm rounded-4 overflow-hidden border-0">
+            <img src="{{ url_for('static', filename='img/' ~ produto.imagem) }}" class="card-img-top object-fit-cover"
+              alt="{{ produto.nome }}" style="height: 200px; object-fit: cover;">
+
+            <div class="card-body d-flex flex-column p-4">
+              <h5 class="card-title fw-bold">{{ produto.nome }}</h5>
+              <p class="card-text text-muted mb-3">{{ produto.descricao }}</p>
+
+              {% if produto.tamanhos %}
+              <select class="form-select custom-select mb-3 mt-auto">
+                {% for tamanho in produto.tamanhos %}
+                <option value="{{ tamanho[0] }}" data-price="{{ tamanho[1] }}">
+                  {{ tamanho[0] }} - R$ {{ "%.2f"|format(tamanho[1]) }}
+                </option>
+                {% endfor %}
+              </select>
+              {% endif %}
+
+              {% if not produto.tamanhos %}
+              <h4 class="text-primary fw-semibold mt-auto">R$ {{ "%.2f"|format(produto.preco or 0.0) }}</h4>
+              {% endif %}
+
+              <button class="btn btn-primary w-100 mt-3 rounded-pill">Adicionar ao Carrinho</button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Avaliações -->
+  <section class="section testimonials">
+    <div class="container">
+      <h2 class="section-title">O que dizem nossos clientes</h2>
+      <div class="testimonial-container">
+        <div class="testimonial card">
+          <p class="testimonial-text">"A melhor feijoada da cidade! Entrega rápida e tudo muito bem embalado. Os
+            complementos são tão bons quanto o prato principal."</p>
+          <p class="testimonial-author">— João Silva, São Paulo</p>
+        </div>
+        <div class="testimonial card">
+          <p class="testimonial-text">"Deliciosa e muito bem temperada, vale cada centavo. Já pedi várias vezes e nunca
+            me decepcionei. A farofa da casa é sensacional!"</p>
+          <p class="testimonial-author">— Ana Oliveira, Rio de Janeiro</p>
+        </div>
+        <div class="testimonial card">
+          <p class="testimonial-text">"Experimentei a versão vegana e fiquei impressionado! Sabor incrível e porção
+            generosa. Recomendo para todos, mesmo quem não é vegano."</p>
+          <p class="testimonial-author">— Carlos Mendes, Belo Horizonte</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contato -->
+  <section id="contact" class="section contact">
+    <div class="container">
+      <h2 class="section-title">Contato</h2>
+      <div class="contact-container">
+        <div class="contact-info">
+          <h3>Informações</h3>
+          <p><strong>Horário de funcionamento:</strong><br>Terça a Domingo, das 11h às 15h</p>
+          <p><strong>Telefone:</strong><br>(11) 99999-9999</p>
+          <p><strong>Email:</strong><br>contato@feijoadaemcasa.com.br</p>
+          <p><strong>Endereço:</strong><br>Rua das Delicias, 123 - São Paulo, SP</p>
+        </div>
+        <div class="contact-form">
+          <h3>Deixe seu feedback</h3>
+          <form id="feedback-form">
+            <div class="form-group">
+              <label for="name">Nome</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="message">Mensagem</label>
+              <textarea id="message" name="message" required></textarea>
+            </div>
+            <button type="submit" class="btn">Enviar Feedback</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-column">
+        <h3>Feijoada em Dayse</h3>
+        <p>Entregamos a melhor feijoada da cidade diretamente na sua casa.</p>
+        <p>&copy; 2023 Feijoada em Dayse. Todos os direitos reservados.</p>
+      </div>
+      <div class="footer-column">
+        <h3>Formas de Pagamento</h3>
+        <div class="payment-methods">
+          <div class="payment-icon">PIX</div>
+          <div class="payment-icon">CARD</div>
+          <div class="payment-icon">CASH</div>
+        </div>
+      </div>
+      <div class="footer-column">
+        <h3>Siga-nos</h3>
+        <p>Acompanhe nossas redes sociais para novidades, promoções e dicas.</p>
+      </div>
+    </div>
   </footer>
 
-  <!-- Botão WhatsApp fixo -->
-  <a href="https://wa.me/5511999999999" class="btn btn-success fixed-whatsapp" target="_blank">
-    WhatsApp
+  <!-- WhatsApp Float Button -->
+  <a class="whatsapp-float">
+    💬
   </a>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Navegação Mobile
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+
+    // Fechar menu ao clicar em um link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        navLinks.classList.remove('active');
+      });
+    });
+
+    // Carrossel
+    const carouselItems = document.querySelectorAll('.carousel-item');
+    const indicators = document.querySelectorAll('.indicator');
+    let currentIndex = 0;
+    let interval;
+
+    function showSlide(index) {
+      // Remover classe active de todos os slides
+      carouselItems.forEach(item => item.classList.remove('active'));
+      indicators.forEach(indicator => indicator.classList.remove('active'));
+
+      // Adicionar classe active ao slide atual
+      carouselItems[index].classList.add('active');
+      indicators[index].classList.add('active');
+
+      currentIndex = index;
+    }
+
+    function nextSlide() {
+      let nextIndex = currentIndex + 1;
+      if (nextIndex >= carouselItems.length) {
+        nextIndex = 0;
+      }
+      showSlide(nextIndex);
+    }
+
+    // Iniciar carrossel automático
+    function startCarousel() {
+      interval = setInterval(nextSlide, 4000);
+    }
+
+    // Parar carrossel automático
+    function stopCarousel() {
+      clearInterval(interval);
+    }
+
+    // Event listeners para indicadores
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => {
+        stopCarousel();
+        showSlide(index);
+        startCarousel();
+      });
+    });
+
+    // Iniciar carrossel
+    startCarousel();
+
+    // Animações de scroll
+    function checkScroll() {
+      const elements = document.querySelectorAll('.about-text, .menu-item, .testimonial');
+      const windowHeight = window.innerHeight;
+
+      elements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        if (elementPosition < windowHeight - 100) {
+          element.classList.add('visible');
+        }
+      });
+    }
+
+    // Verificar posição inicial
+    window.addEventListener('load', checkScroll);
+
+    // Verificar ao rolar
+    window.addEventListener('scroll', checkScroll);
+
+    // Cálculo de preço em tempo real
+    function setupPriceCalculation(radioName, checkboxName, totalPriceId) {
+      const radioButtons = document.querySelectorAll(`input[name="${radioName}"]`);
+      const checkboxes = document.querySelectorAll(`input[name="${checkboxName}"]`);
+      const totalPriceElement = document.getElementById(totalPriceId);
+
+      function updatePrice() {
+        let basePrice = 0;
+        let complementsPrice = 0;
+
+        // Obter preço base do tamanho selecionado
+        radioButtons.forEach(radio => {
+          if (radio.checked) {
+            basePrice = parseFloat(radio.dataset.price);
+          }
+        });
+
+        // Adicionar preço dos complementos
+        checkboxes.forEach(checkbox => {
+          if (checkbox.checked) {
+            complementsPrice += parseFloat(checkbox.dataset.price);
+          }
+        });
+
+        // Atualizar total
+        const total = basePrice + complementsPrice;
+        totalPriceElement.textContent = total.toFixed(2);
+      }
+
+      // Event listeners
+      radioButtons.forEach(radio => {
+        radio.addEventListener('change', updatePrice);
+      });
+
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updatePrice);
+      });
+    }
+
+    // Configurar cálculo de preço para cada item do cardápio
+    setupPriceCalculation('size', 'complement', 'total-price');
+    setupPriceCalculation('size-light', 'complement-light', 'total-price-light');
+    setupPriceCalculation('size-vegana', 'complement-vegana', 'total-price-vegana');
+
+    // Função para gerar mensagem de WhatsApp
+    function setupWhatsAppOrder(buttonClass, radioName, checkboxName, productName, temperoId, arrozTipoId) {
+      const button = document.querySelector(`.${buttonClass}`);
+
+      button.addEventListener('click', () => {
+        // Obter tamanho selecionado
+        let tamanho = '';
+        let preco = 0;
+        document.querySelectorAll(`input[name="${radioName}"]`).forEach(radio => {
+          if (radio.checked) {
+            tamanho = radio.value;
+            preco = parseFloat(radio.dataset.price);
+          }
+        });
+
+        // Obter complementos selecionados
+        const complementos = [];
+        let complementosPreco = 0;
+        document.querySelectorAll(`input[name="${checkboxName}"]`).forEach(checkbox => {
+          if (checkbox.checked) {
+            complementos.push(checkbox.value);
+            complementosPreco += parseFloat(checkbox.dataset.price);
+          }
+        });
+
+        // Obter personalizações
+        const tempero = document.getElementById(temperoId).value;
+        const arrozTipo = document.getElementById(arrozTipoId).value;
+
+        // Calcular preço total
+        const total = preco + complementosPreco;
+
+        // Gerar mensagem
+        let mensagem = `Olá! Gostaria de pedir: ${productName}, tamanho ${tamanho.charAt(0).toUpperCase() + tamanho.slice(1)}`;
+
+        if (complementos.length > 0) {
+          const complementosFormatados = complementos.map(c => {
+            switch (c) {
+              case 'arroz': return 'arroz branco';
+              case 'couve': return 'couve refogada';
+              case 'farofa': return 'farofa da casa';
+              case 'laranja': return 'laranja em rodelas';
+              default: return c;
+            }
+          });
+          mensagem += `, com ${complementosFormatados.join(', ')}`;
+        }
+
+        mensagem += `. Tempero: ${tempero}. Tipo de arroz: ${arrozTipo}. Valor total: R$ ${total.toFixed(2)}`;
+
+        // Abrir WhatsApp
+        window.open(`https://wa.me/5511999999999?text=${encodeURIComponent(mensagem)}`, '_blank');
+      });
+    }
+
+    // Configurar botões de WhatsApp
+    setupWhatsAppOrder('whatsapp-order', 'size', 'complement', 'Feijoada Tradicional', 'tempero', 'arroz-tipo');
+    setupWhatsAppOrder('whatsapp-order-light', 'size-light', 'complement-light', 'Feijoada Light', 'tempero-light', 'arroz-tipo-light');
+    setupWhatsAppOrder('whatsapp-order-vegana', 'size-vegana', 'complement-vegana', 'Feijoada Vegana', 'tempero-vegana', 'arroz-tipo-vegana');
+
+    // Botão flutuante de WhatsApp
+    document.querySelector('.whatsapp-float').addEventListener('click', () => {
+      window.open('https://wa.me/5511999999999?text=Olá! Gostaria de saber mais sobre a Feijoada em Dayse.', '_blank');
+    });
+
+    // Formulário de feedback
+    document.getElementById('feedback-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+
+      // Simulação de envio (em um site real, isso seria enviado para um servidor)
+      alert(`Obrigado ${name}! Seu feedback foi enviado com sucesso.`);
+      this.reset();
+    });
+  </script>
+  <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'939364d1519be12a',t:'MTc0NjE0NTY1Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
 </body>
 
 </html>

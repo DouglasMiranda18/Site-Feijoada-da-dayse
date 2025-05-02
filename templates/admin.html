@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Feijoada em Casa</title>
+  <title>Admin - Feijoada em Casa</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     :root {
@@ -11,30 +12,23 @@
       --laranja: #d88b3e;
       --vermelho: #ba3b35;
       --branco: #ffffff;
-      --preto: #000000;
     }
 
     body {
       background-color: var(--branco);
-      color: var(--preto);
     }
 
     .navbar {
       background-color: var(--marrom-escuro);
     }
 
-    .navbar-brand, .nav-link {
+    .navbar-brand,
+    .nav-link {
       color: var(--branco) !important;
-    }
-
-    .banner {
-      background-color: var(--laranja);
-      color: var(--preto);
     }
 
     .btn-dark {
       background-color: var(--marrom-escuro);
-      border-color: var(--marrom-escuro);
     }
 
     .btn-success {
@@ -47,29 +41,22 @@
       border-color: #a5312d;
     }
 
-    .product-card img {
-      height: 200px;
-      object-fit: cover;
-    }
-
-    .fixed-whatsapp {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 1000;
-    }
-
     footer {
       background-color: var(--marrom-escuro);
       color: var(--branco);
     }
+
+    img.produto-img {
+      width: 100px;
+      height: auto;
+    }
   </style>
 </head>
+
 <body>
-  <!-- Cabeçalho -->
   <nav class="navbar navbar-expand-lg">
     <div class="container">
-      <a class="navbar-brand" href="#">Feijoada em Casa</a>
+      <a class="navbar-brand" href="/">Feijoada em Casa</a>
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="/">Cardápio</a></li>
@@ -79,8 +66,6 @@
     </div>
   </nav>
 
-  {% if admin %}
-  <!-- Página Admin -->
   <div class="container my-5">
     <h2>Adicionar Novo Produto</h2>
     <form method="POST" action="/admin" enctype="multipart/form-data">
@@ -88,78 +73,93 @@
         <label for="nome" class="form-label">Nome do Produto</label>
         <input type="text" class="form-control" id="nome" name="nome" required>
       </div>
+
       <div class="mb-3">
-        <label for="acompanhamentos" class="form-label">Acompanhamentos</label>
-        <textarea class="form-control" id="acompanhamentos" name="acompanhamentos" rows="3" required></textarea>
+        <label for="descricao" class="form-label">Descrição</label>
+        <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
       </div>
+
       <div class="mb-3">
-        <label for="valor" class="form-label">Valor (R$)</label>
-        <input type="number" class="form-control" id="valor" name="valor" step="0.01" required>
+        <label class="form-label">Tamanhos e Preços</label>
+        <div class="input-group mb-2">
+          <span class="input-group-text">P</span>
+          <input type="text" class="form-control" name="tamanho_nome[]" value="P - 200ml" readonly>
+          <span class="input-group-text">R$</span>
+          <input type="number" step="0.01" class="form-control" name="tamanho_preco[]" required>
+        </div>
+        <div class="input-group mb-2">
+          <span class="input-group-text">M</span>
+          <input type="text" class="form-control" name="tamanho_nome[]" value="M - 500ml" readonly>
+          <span class="input-group-text">R$</span>
+          <input type="number" step="0.01" class="form-control" name="tamanho_preco[]" required>
+        </div>
+        <div class="input-group">
+          <span class="input-group-text">G</span>
+          <input type="text" class="form-control" name="tamanho_nome[]" value="G - 800ml" readonly>
+          <span class="input-group-text">R$</span>
+          <input type="number" step="0.01" class="form-control" name="tamanho_preco[]" required>
+        </div>
       </div>
+
+      <div class="mb-3">
+        <label class="form-label">Complementos (opcional)</label>
+        <div class="input-group mb-2">
+          <input type="text" class="form-control" name="complemento_nome[]" placeholder="Nome do complemento">
+          <span class="input-group-text">R$</span>
+          <input type="number" step="0.01" class="form-control" name="complemento_preco[]" placeholder="Preço">
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Personalizações</label>
+        <div class="input-group mb-2">
+          <input type="text" class="form-control" name="personalizacao_tipo[]" placeholder="Tipo (ex: tempero)">
+          <input type="text" class="form-control" name="personalizacao_opcao[]" placeholder="Opção (ex: leve)">
+        </div>
+      </div>
+
       <div class="mb-3">
         <label for="foto" class="form-label">Foto</label>
         <input type="file" class="form-control" id="foto" name="foto" accept="image/*" required>
       </div>
-      <div class="mb-3">
-        <label for="tamanho" class="form-label">Tamanho</label>
-        <select class="form-select" id="tamanho" name="tamanho" required>
-          <option value="P">P - 200ml</option>
-          <option value="M">M - 500ml</option>
-          <option value="G">G - 800ml</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="estoque" class="form-label">Estoque</label>
-        <input type="number" class="form-control" id="estoque" name="estoque" required>
-      </div>
+
       <button type="submit" class="btn btn-success">Salvar Produto</button>
     </form>
-  </div>
-  {% else %}
-  <!-- Banner -->
-  <div class="banner text-center p-5">
-    <h1>Feijoada fresquinha na sua casa</h1>
-    <p>Escolha seu tamanho, monte seu prato e receba com rapidez!</p>
-    <a href="#cardapio" class="btn btn-dark">Ver Cardápio</a>
+
+    <hr>
+
+    <h2>Produtos Cadastrados</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Imagem</th>
+          <th>Nome</th>
+          <th>Descrição</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for produto in produtos %}
+        <tr>
+          <td><img src="{{ url_for('static', filename='img/' ~ produto.imagem) }}" class="produto-img" alt=""></td>
+          <td>{{ produto.nome }}</td>
+          <td>{{ produto.descricao }}</td>
+          <td>
+            <a href="{{ url_for('editar_produto', id=produto.id) }}" class="btn btn-warning btn-sm">Editar</a>
+            <a href="{{ url_for('excluir_produto', id=produto.id) }}" class="btn btn-danger btn-sm"
+              onclick="return confirm('Tem certeza que deseja excluir este produto?');">Excluir</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 
-  <!-- Cardápio -->
-  <div class="container my-5" id="cardapio">
-    <h2 class="mb-4">Cardápio</h2>
-    <div class="row">
-      {% for produto in produtos %}
-      <div class="col-md-6 mb-4">
-        <div class="card product-card">
-          <img src="{{ produto.foto_url }}" class="card-img-top" alt="{{ produto.nome }}">
-          <div class="card-body">
-            <h5 class="card-title">{{ produto.nome }}</h5>
-            <p class="card-text">{{ produto.acompanhamentos }}</p>
-            <p><strong>Estoque:</strong> {{ produto.estoque }} unidades disponíveis</p>
-            <select class="form-select mb-2">
-              <option value="{{ produto.valor }}">P - R${{ produto.valor|round(2) }}</option>
-              <option value="{{ produto.valor * 1.8|round(2) }}">M - R${{ produto.valor * 1.8|round(2) }}</option>
-              <option value="{{ produto.valor * 2.8|round(2) }}">G - R${{ produto.valor * 2.8|round(2) }}</option>
-            </select>
-            <a href="https://wa.me/5511999999999?text=Olá! Gostaria de fazer um pedido de {{ produto.nome }}" class="btn btn-success w-100">Pedir via WhatsApp</a>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-  {% endif %}
-
-  <!-- Rodapé -->
   <footer class="text-center py-4">
     <p>&copy; 2025 Feijoada em Casa. Todos os direitos reservados.</p>
-    <p>Formas de pagamento: Pix, Cartão, Dinheiro</p>
   </footer>
-
-  <!-- Botão WhatsApp fixo -->
-  <a href="https://wa.me/5511999999999" class="btn btn-success fixed-whatsapp" target="_blank">
-    WhatsApp
-  </a>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
